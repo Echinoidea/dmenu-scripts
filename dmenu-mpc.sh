@@ -1,6 +1,6 @@
 #!/bin/sh
 
-result=$(echo -e "toggle\nnext\nprev\nstart\nkill\nshuffle\nstop\nnotify" | dmenu -l 8 -i)
+result=$(echo -e "toggle\nnext\nprev\nstart\nkill\nshuffle\nstop\nnotify" | dmenu -l 8 -i -p "mpc:")
 
 if [[ "${result}" = "start" ]]; then
   mpd

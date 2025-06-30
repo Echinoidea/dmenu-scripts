@@ -1,6 +1,6 @@
 #!/bin/sh
 
-result=$(echo -e "sleep\nsuspend\nreboot\npower off" | dmenu -l 4 -i)
+result=$(echo -e "sleep\nsuspend\nreboot\npower off" | dmenu -l 4 -i -p "system:")
 
 if [[ "${result}" = "power off" ]]; then
     systemctl poweroff -i

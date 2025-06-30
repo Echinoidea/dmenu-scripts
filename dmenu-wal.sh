@@ -1,32 +1,37 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-# slightly scuffed wallpaper picker menu for use with pywal - uses nsxiv if installed, otherwise uses dmenu
+# dmenu script for pywal which lets you select a wallpaper or a pywal defined theme. Based on BreadOnPenguin's pywal dmenu script
 
-FOLDER=~/Pictures/wallpapers # wallpaper folder
-SCRIPT=./pywal-update-script # script to run after wal for refreshing programs, etc.
+FOLDER=~/Pictures/wallpapers
+SCRIPT=/home/gabriel/dmenu-scripts/pywal-update.sh # pywal post-run script
 
+menu() {
+  # find image files recursively and ignore hidden directories
+    CHOICES=$(echo -e "random\ntheme\n$(find "$FOLDER" -type f -regex '.*\.\(jpg\|jpeg\|png\|bmp\|gif\|tif\|tiff\)$' -printf '%P\n' | sort -V)")
 
-menu () {
-		# if command -v nsxiv >/dev/null; then 
-		# 		CHOICE=$(nsxiv -otb $FOLDER/*)
-		# else 
-				CHOICE=$(echo -e "Random\n$(command ls -v $FOLDER)" | dmenu -c -l 15 -i -p "Wallpaper: ")
-		# fi
+    CHOICE=$(echo "$CHOICES" | dmenu -l 20 -i -p "pywal:")
 
-case $CHOICE in
-		Random) wal -i "$FOLDER" -o $SCRIPT ;; # dmenu random option
-		*.*) wal -i "$CHOICE" ;;
-		*) exit 0 ;;
-esac
+    case $CHOICE in
+        random) wal -i "$FOLDER" -e -o ~/.config/dunst/launch.sh ; $SCRIPT;;
+        theme) select_theme ;; 
+        *.*) wal -i "$FOLDER/$CHOICE" ; $SCRIPT ;;
+        *) exit 0 ;;
+    esac
 }
 
-# If given arguments:
-# First argument will be used by pywal as wallpaper/dir path
-# Second will be used as theme (use wal --theme to view built-in themes)
+select_theme() {
+    THEMES=$(wal --theme -e -o ~/.config/dunst/launch.sh | grep -E '^ - [^()]*' | awk '{print $2}' | sed 's/[[:space:]].*//')
+
+    THEME_CHOICE=$(echo "$THEMES" | dmenu -l 20 -i -p "theme:")
+    
+    if [ -n "$THEME_CHOICE" ]; then
+        wal --theme "$THEME_CHOICE" -o "$SCRIPT"
+    fi
+}
 
 case "$#" in
-		0) menu ;;
-		1) wal -i "$1" ;;
-		2) wal -i "$1" --theme $2 ;;
-		*) exit 0 ;;
+    0) menu ;;
+    1) wal -i "$1" ;;
+    2) wal -i "$1" --theme "$2" ;;
+    *) exit 0 ;;
 esac
