@@ -1,9 +1,13 @@
 #!/bin/sh
+
 xrdb -merge ~/.cache/wal/Xresources
 
-killall polybar
+killall -s SIGKILL polybar
+killall -s SIGKILL launch.sh 
 
-~/.config/polybar/launch.sh
+wait 1
+
+~/.config/polybar/launch.sh 
 
 wait
 
@@ -12,3 +16,5 @@ killall sxhkd-listener
 
 ~/.config/sxhkd/scripts/sxhkd-start &
 ~/.config/sxhkd/scripts/sxhkd-listener &
+
+killall pywal-update.sh
