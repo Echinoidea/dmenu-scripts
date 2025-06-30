@@ -5,7 +5,7 @@ xrdb -merge ~/.cache/wal/Xresources
 killall -s SIGKILL polybar
 killall -s SIGKILL launch.sh 
 
-wait 1
+wait
 
 ~/.config/polybar/launch.sh 
 
