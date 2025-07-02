@@ -4,7 +4,7 @@ DIR="$HOME/.config"
 
 declare -a options=(
   "sxhkd - $DIR/sxhkd/sxhkdrc"
-  "bspwm - $DIR/bspwm/bspwmrm"
+  "bspwm - $DIR/bspwm/bspwmrc"
   "polybar - $DIR/polybar/config.ini"
   "doomemacs - $DIR/doom/config.ini"
   "picom - $DIR/picom/picom.conf"
@@ -19,7 +19,8 @@ if [[ "$choice" == "quit" ]]; then
 elif [ -n "$choice" ]; then
   cfg=$(echo "${choice}" | awk -F ' - ' '{print $2}')
   # $EDITOR "$cfg"
-  alacritty -e nvim "$cfg"
+  # alacritty -e nvim "$cfg"
+  emacsclient -a '' -c "$cfg"
 else
   echo "terminated" && exit 1
 fi
