@@ -6,7 +6,7 @@ SCRIPTS_DIR=~/dmenu-scripts
 
 SCRIPTS=$(find "$SCRIPTS_DIR" -maxdepth 1 -name "*.sh" -exec basename {} .sh \;)
 
-SELECTED_SCRIPT=$(echo "$SCRIPTS" | dmenu -l 10 -p "M-x:")
+SELECTED_SCRIPT=$(echo "$SCRIPTS" | dmenu -l 15 -p "M-x:")
 
 if [ -n "$SELECTED_SCRIPT" ]; then
     bash "$SCRIPTS_DIR/$SELECTED_SCRIPT.sh"
