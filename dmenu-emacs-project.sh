@@ -4,7 +4,7 @@
 projects=$(emacsclient -e '(mapcar (lambda (dir) (abbreviate-file-name dir)) (projectile-relevant-known-projects))' | tr -d '()\"\n')
 
 # Use dmenu to select a project
-selected_project=$(echo "$projects" | tr ' ' '\n' | dmenu -l 10 -i -p "open project:")
+selected_project=$(echo "$projects" | tr ' ' '\n' | dmenu -l 20 -i -p "open project:")
 
 # Check if there's an existing emacs frame
 existing_frame=$(emacsclient -e '(>= (length (frame-list)) 2)' 2>/dev/null)
