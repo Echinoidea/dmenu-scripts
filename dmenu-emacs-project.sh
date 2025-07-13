@@ -13,10 +13,10 @@ existing_frame=$(emacsclient -e '(>= (length (frame-list)) 2)' 2>/dev/null)
 if [ -n "$selected_project" ]; then
     if [ "$existing_frame" == "t" ]; then
         # an existing client frame is available
-        emacsclient -e "(progn (counsel-projectile-switch-project-by-name \"$selected_project\") (switch-to-buffer (window-buffer (selected-window))))"
+        emacsclient -e "(progn (projectile-switch-project-by-name \"$selected_project\") (switch-to-buffer (window-buffer (selected-window))))"
     elif [ -n "$DISPLAY" ]; then
         # no frame, create a graphical frame
-        emacsclient -c -e "(progn (counsel-projectile-switch-project-by-name \"$selected_project\") (switch-to-buffer (window-buffer (selected-window))))"
+        emacsclient -c -e "(progn (projectile-switch-project-by-name \"$selected_project\") (switch-to-buffer (window-buffer (selected-window))))"
     else
         # no frame and running in terminal, open terminal mode
         emacsclient -t -e "(progn (projectile-switch-project-by-name \"$selected_project\") (dired \"$selected_project\") (switch-to-buffer (window-buffer (selected-window))))"

@@ -9,6 +9,7 @@ declare -a options=(
   "doomemacs - $DIR/doom/config.ini"
   "picom - $DIR/picom/picom.conf"
   "fish - $DIR/fish/config.fish"
+  "dunst - $DIR/dunst/dunstrc"
   "quit"
 )
 
