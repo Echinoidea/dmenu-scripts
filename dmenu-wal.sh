@@ -3,7 +3,23 @@
 # dmenu script for pywal which lets you select a wallpaper or a pywal defined theme. Based on BreadOnPenguin's pywal dmenu script
 
 FOLDER=~/Pictures/wallpapers
-SCRIPT=/home/gabriel/dmenu-scripts/pywal-update.sh # pywal post-run script
+SCRIPT_BSPWM=/home/gabriel/dmenu-scripts/pywal-update.sh         # pywal post-run script
+SCRIPT_XMONAD=/home/gabriel/dmenu-scripts/pywal-update-xmonad.sh # pywal post-run script
+
+WM_NAME=$(wmctrl -m | awk -F: '/Name/ {print tolower($2)}' | xargs)
+
+case "$WM_NAME" in
+bspwm)
+    SCRIPT="$SCRIPT_BSPWM"
+    ;;
+xmonad)
+    SCRIPT="$SCRIPT_XMONAD"
+    ;;
+*)
+    echo "Unknown window manager: $WM_NAME"
+    SCRIPT=""
+    ;;
+esac
 
 menu() {
     # find image files recursively and ignore hidden directories

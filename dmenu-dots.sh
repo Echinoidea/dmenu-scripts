@@ -10,6 +10,7 @@ declare -a options=(
   "picom - $DIR/picom/picom.conf"
   "fish - $DIR/fish/config.fish"
   "dunst - $DIR/dunst/dunstrc"
+  "xmonad - $DIR/xmonad/xmonad.hs"
   "quit"
 )
 
