@@ -31,16 +31,18 @@ menu() {
     random)
         FILES=$(find "$FOLDER" -type f -regex '.*\.\(jpg\|jpeg\|png\|bmp\|gif\|tif\|tiff\)$')
         RANDOM_FILE=$(printf '%s\n' "$FILES" | shuf -n 1)
-        wal -i "$RANDOM_FILE" -e
+        wal -i "$RANDOM_FILE" -e -n
+        feh --bg-fill "$RANDOM_FILE"
         killall dunst
-        $SCRIPT
+        $SCRIPT_BSPWM
         dunst
         notify-send -t 3000 "pywal $(dirname "$RANDOM_FILE" | xargs basename)/$(basename "$RANDOM_FILE")"
         ;;
     theme) select_theme ;;
     *.*)
-        wal -i "$FOLDER/$CHOICE"
-        $SCRIPT
+        wal -i "$FOLDER/$CHOICE" -n -e
+        feh --bg-fill "$FOLDER/$CHOICE"
+        $SCRIPT_BSPWM
         ;;
     *) exit 0 ;;
     esac
